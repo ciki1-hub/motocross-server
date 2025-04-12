@@ -20,13 +20,23 @@ rtmp {
             dash_fragment 3;
             dash_playlist_length 60;
             
-            on_publish http://${API_SERVICE_NAME}:${API_PORT}/auth/stream;
-            on_publish_done http://${API_SERVICE_NAME}:${API_PORT}/auth/stream-done;
+            on_publish http://${INTERNAL_API_URL}/auth/stream;
+            on_publish_done http://${INTERNAL_API_URL}/auth/stream-done;
+            
+            hls_variant _low BANDWIDTH=1000000;
+            hls_variant _mid BANDWIDTH=2000000;
+            hls_variant _high BANDWIDTH=4000000;
+            hls_variant _veryhigh BANDWIDTH=8000000;
         }
     }
 }
 
 http {
+    sendfile off;
+    tcp_nopush on;
+    directio 512;
+    default_type application/octet-stream;
+    
     server {
         listen ${HTTP_PORT};
         
