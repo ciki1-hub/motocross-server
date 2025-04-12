@@ -22,7 +22,7 @@ services:
     name: motocross-rtmp-server
     env: docker
     plan: free
-    dockerfilePath: streaming/Dockerfile
+    dockerfilePath: Streaming/Dockerfile
     envVars:
       - key: RTMP_PORT
         value: 1935
