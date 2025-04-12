@@ -1,13 +1,17 @@
 FROM tiangolo/nginx-rtmp
 
 # Copy custom configuration
-COPY ./streaming/nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # Install FFmpeg for transcoding
 RUN apt-get update && \
     apt-get install -y ffmpeg && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# Create nginx user and group
+RUN groupadd -r nginx && \
+    useradd -r -g nginx nginx
 
 # Create directories for HLS streams
 RUN mkdir -p /opt/rtmp/hls && \
