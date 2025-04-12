@@ -22,14 +22,14 @@ services:
     name: motocross-rtmp-server
     env: docker
     plan: free
-    dockerfilePath: streaming/Dockerfile
+    dockerfilePath: Streaming/Dockerfile  # Uppercase S
     envVars:
       - key: RTMP_PORT
         value: 1935
       - key: HTTP_PORT
         value: 8080
       - key: MOTOCROSS_API_SERVICE
-        value: motocross-livestream-api  # Must match API service name exactly
+        value: motocross-livestream-api
       - fromGroup: motocross-streaming-keys
     autoDeploy: true
     healthCheckPath: /health
@@ -41,5 +41,3 @@ envVarGroups:
         sync: false
       - key: STORAGE_BUCKET
         sync: false
-      - key: HLS_BASE_URL
-        value: http://motocross-rtmp-server:8080/hls
