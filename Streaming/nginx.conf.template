@@ -20,9 +20,9 @@ rtmp {
             dash_fragment 3s;
             dash_playlist_length 60s;
             
-            # Use Render's internal service discovery
-            on_publish http://${MOTOCROSS_API_SERVICE}:8080/auth/stream;
-            on_publish_done http://${MOTOCROSS_API_SERVICE}:8080/auth/stream-done;
+            # Using Render's public URL
+            on_publish ${RTMP_AUTH_URL}/auth/stream;
+            on_publish_done ${RTMP_AUTH_URL}/auth/stream-done;
         }
     }
 }
