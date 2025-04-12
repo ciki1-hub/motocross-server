@@ -20,8 +20,8 @@ rtmp {
             dash_fragment 3;
             dash_playlist_length 60;
             
-            on_publish http://${INTERNAL_API_URL}/auth/stream;
-            on_publish_done http://${INTERNAL_API_URL}/auth/stream-done;
+            on_publish ${API_SERVICE_URL}/auth/stream;
+            on_publish_done ${API_SERVICE_URL}/auth/stream-done;
             
             hls_variant _low BANDWIDTH=1000000;
             hls_variant _mid BANDWIDTH=2000000;
@@ -66,12 +66,6 @@ http {
             types {
                 application/dash+xml mpd;
             }
-        }
-        
-        location /stats {
-            rtmp_stat all;
-            rtmp_stat_stylesheet stat.xsl;
-            add_header 'Access-Control-Allow-Origin' '*' always;
         }
     }
 }
