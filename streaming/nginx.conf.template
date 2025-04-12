@@ -4,8 +4,9 @@ events {}
 
 rtmp {
     server {
-        listen ${RTMP_PORT};
-        
+       listen 1935;
+        listen 1935 udp;  # Add UDP listener
+
         application live {
             live on;
             record off;
@@ -27,6 +28,8 @@ rtmp {
             hls_variant _mid BANDWIDTH=2000000;
             hls_variant _high BANDWIDTH=4000000;
             hls_variant _veryhigh BANDWIDTH=8000000;
+udp_streams on;
+            udp_port_range 10000-20000;
         }
     }
 }
