@@ -3,10 +3,8 @@ services:
     name: motocross-rtmp-server
     env: docker
     plan: free
-    dockerfilePath: Streaming/Dockerfile
-    buildCommand: |
-      cd Streaming && \
-      docker build -t motocross-rtmp -f Dockerfile .
+    dockerfilePath: /Streaming/Dockerfile
+    buildCommand: docker build -t motocross-rtmp -f Streaming/Dockerfile .
     envVars:
       - key: RTMP_PORT
         value: 1935
@@ -15,5 +13,3 @@ services:
       - fromGroup: motocross-streaming-keys
     autoDeploy: true
     healthCheckPath: /health
-      - key: STORAGE_BUCKET
-        sync: false
