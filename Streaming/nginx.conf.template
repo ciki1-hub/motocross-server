@@ -10,7 +10,6 @@ rtmp {
         application live {
             live on;
             record off;
-            
             hls on;
             hls_path /opt/rtmp/hls;
             hls_fragment 3s;
@@ -21,12 +20,8 @@ rtmp {
             dash_fragment 3s;
             dash_playlist_length 60s;
             
-            on_publish http://${MOTOCROSS_API_SERVICE}:8080/auth/stream;
-            on_publish_done http://${MOTOCROSS_API_SERVICE}:8080/auth/stream-done;
-            
-            hls_variant _low BANDWIDTH=1000000;
-            hls_variant _mid BANDWIDTH=2000000;
-            hls_variant _high BANDWIDTH=4000000;
+            on_publish http://motocross-livestream-api:8080/auth/stream;
+            on_publish_done http://motocross-livestream-api:8080/auth/stream-done;
         }
     }
 }
@@ -45,12 +40,6 @@ http {
                 application/vnd.apple.mpegurl m3u8;
                 video/mp2t ts;
             }
-            root /opt/rtmp;
-            add_header Cache-Control no-cache;
-            add_header Access-Control-Allow-Origin *;
-        }
-        
-        location /dash {
             root /opt/rtmp;
             add_header Cache-Control no-cache;
             add_header Access-Control-Allow-Origin *;
