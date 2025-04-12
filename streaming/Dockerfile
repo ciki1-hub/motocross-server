@@ -13,7 +13,7 @@ RUN groupadd -r nginx && \
     useradd -r -g nginx nginx
 
 # Copy configuration files
-COPY nginx.conf.template /etc/nginx/nginx.conf.template
+COPY ./streaming/nginx.conf.template /etc/nginx/nginx.conf.template
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
