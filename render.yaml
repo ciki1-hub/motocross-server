@@ -3,7 +3,7 @@ services:
   - type: web
     name: motocross-livestream-api
     env: node
-    plan: starter
+    plan: free
     buildCommand: npm install
     startCommand: npm start
     envVars:
@@ -19,7 +19,7 @@ services:
   - type: web
     name: motocross-rtmp-server
     env: docker
-    plan: standard
+    plan: free
     dockerfilePath: ./streaming/Dockerfile
     envVars:
       - key: RTMP_PORT
