@@ -11,6 +11,8 @@ services:
         value: production
       - key: PORT
         value: 8080
+      - key: RTMP_SERVER_URL
+        value: http://motocross-rtmp-server:8080
       - fromGroup: motocross-streaming-keys
     autoDeploy: true
     healthCheckPath: /health
@@ -20,12 +22,14 @@ services:
     name: motocross-rtmp-server
     env: docker
     plan: free
-    dockerfilePath: Streaming/Dockerfile
+    dockerfilePath: streaming/Dockerfile
     envVars:
       - key: RTMP_PORT
         value: 1935
       - key: HTTP_PORT
         value: 8080
+      - key: MOTOCROSS_API_SERVICE
+        value: motocross-livestream-api  # Must match API service name exactly
       - fromGroup: motocross-streaming-keys
     autoDeploy: true
     healthCheckPath: /health
@@ -34,8 +38,8 @@ envVarGroups:
   - name: motocross-streaming-keys
     envVars:
       - key: API_KEY
-        # This will be set securely in the Render Dashboard
         sync: false
       - key: STORAGE_BUCKET
-        # This will be set securely in the Render Dashboard
         sync: false
+      - key: HLS_BASE_URL
+        value: http://motocross-rtmp-server:8080/hls
