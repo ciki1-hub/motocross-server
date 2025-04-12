@@ -20,8 +20,9 @@ rtmp {
             dash_fragment 3s;
             dash_playlist_length 60s;
             
-            on_publish http://motocross-livestream-api:8080/auth/stream;
-            on_publish_done http://motocross-livestream-api:8080/auth/stream-done;
+            # Use Render's internal service discovery
+            on_publish http://${MOTOCROSS_API_SERVICE}:8080/auth/stream;
+            on_publish_done http://${MOTOCROSS_API_SERVICE}:8080/auth/stream-done;
         }
     }
 }
