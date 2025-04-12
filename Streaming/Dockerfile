@@ -12,9 +12,9 @@ RUN mkdir -p /opt/rtmp/hls && \
     chown -R www-data:www-data /opt/rtmp && \
     chmod -R 755 /opt/rtmp
 
-# Copy configuration
-COPY nginx.conf.template /etc/nginx/nginx.conf
-COPY start.sh /start.sh
+# Copy configuration from build context
+COPY ./nginx.conf.template /etc/nginx/nginx.conf
+COPY ./start.sh /start.sh
 RUN chmod +x /start.sh
 
 # Expose ports
