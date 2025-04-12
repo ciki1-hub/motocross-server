@@ -4,8 +4,8 @@ services:
     name: motocross-livestream-api
     env: node
     plan: free
-    buildCommand: npm install
-    startCommand: npm start
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
     envVars:
       - key: NODE_ENV
         value: production
@@ -20,7 +20,7 @@ services:
     name: motocross-rtmp-server
     env: docker
     plan: free
-    dockerfilePath: ./streaming/Dockerfile
+    dockerfilePath: ./streaming/Dockerfile  # Updated path
     envVars:
       - key: RTMP_PORT
         value: 1935
