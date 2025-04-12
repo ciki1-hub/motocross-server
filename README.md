@@ -15,7 +15,7 @@ This repository is configured for deployment on Render.com using the included `r
 
 1. Install dependencies:
    ```
-   cd server && npm install
+   npm install
    ```
 
 2. Start the API server:
