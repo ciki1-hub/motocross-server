@@ -13,14 +13,12 @@ RUN mkdir -p /opt/rtmp/hls && \
     chmod -R 755 /opt/rtmp
 
 # Copy configuration
-COPY nginx.conf.template /etc/nginx/nginx.conf.template
+COPY nginx.conf.template /etc/nginx/nginx.conf
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
-# Expose ports (comments moved above the commands)
-# RTMP port
+# Expose ports
 EXPOSE 1935
-# HTTP/HLS port
 EXPOSE 8080
 
 # Health check
