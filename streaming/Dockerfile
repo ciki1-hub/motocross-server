@@ -28,5 +28,6 @@ HEALTHCHECK --interval=30s --timeout=3s \
 
 EXPOSE 1935
 EXPOSE 8080
-
+EXPOSE 1935/udp
+EXPOSE 10000-20000/udp
 CMD ["/start.sh"]
