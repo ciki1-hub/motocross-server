@@ -1,7 +1,7 @@
 FROM tiangolo/nginx-rtmp
 
-# Copy custom configuration
-COPY nginx.conf /etc/nginx/nginx.conf
+# Copy custom configuration from current directory
+COPY ./nginx.conf /etc/nginx/nginx.conf
 
 # Install FFmpeg for transcoding
 RUN apt-get update && \
@@ -12,7 +12,7 @@ RUN apt-get update && \
 # Create directories for HLS streams
 RUN mkdir -p /opt/rtmp/hls && \
     mkdir -p /opt/rtmp/dash && \
-    chown -R nginx:nginx /opt/rtmp
+    chown -R www-data:www-data /opt/rtmp  # Changed from nginx to www-data
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s \
