@@ -16,13 +16,13 @@ services:
       - fromGroup: motocross-streaming-keys
     autoDeploy: true
     healthCheckPath: /health
-    
-  # RTMP Streaming Server
+
+  # RTMP Server
   - type: web
     name: motocross-rtmp-server
     env: docker
     plan: free
-    dockerfilePath: Streaming/Dockerfile
+    dockerfilePath: streaming/Dockerfile
     envVars:
       - key: RTMP_PORT
         value: 1935
