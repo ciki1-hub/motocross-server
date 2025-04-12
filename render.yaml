@@ -14,7 +14,9 @@ services:
       - fromGroup: motocross-streaming-keys
     autoDeploy: true
     healthCheckPath: /health
-    
+     - key: UDP_PORTS
+      value: "1935,10000-20000"
+      
   # RTMP Streaming Server
   - type: web
     name: motocross-rtmp-server
