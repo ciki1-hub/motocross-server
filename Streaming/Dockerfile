@@ -17,9 +17,11 @@ COPY nginx.conf.template /etc/nginx/nginx.conf.template
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
-# Expose ports
-EXPOSE 1935  # RTMP
-EXPOSE 8080  # HTTP/HLS
+# Expose ports (comments moved above the commands)
+# RTMP port
+EXPOSE 1935
+# HTTP/HLS port
+EXPOSE 8080
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s \
