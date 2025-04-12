@@ -14,7 +14,7 @@ RUN groupadd -r nginx && \
 
 # Copy configuration files
 COPY ./streaming/nginx.conf.template /etc/nginx/nginx.conf.template
-COPY start.sh /start.sh
+COPY ./streaming/start.sh /start.sh
 RUN chmod +x /start.sh
 
 # Create streaming directories
