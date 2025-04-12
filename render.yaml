@@ -26,8 +26,8 @@ services:
         value: 1935
       - key: HTTP_PORT
         value: 8080
-      - key: INTERNAL_API_URL
-        value: "motocross-livestream-api:8080"
+      - key: API_SERVICE_URL
+        value: "http://motocross-livestream-api.onrender.com:8080"
       - fromGroup: motocross-streaming-keys
     autoDeploy: true
     healthCheckPath: /health
