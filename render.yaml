@@ -1,15 +1,46 @@
 services:
+  # API Server
+  - type: web
+    name: motocross-livestream-api
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 8080
+      - key: RTMP_SERVER_URL
+        value: http://motocross-rtmp-server:8080
+      - fromGroup: motocross-streaming-keys
+    autoDeploy: true
+    healthCheckPath: /health
+
+  # RTMP Server
   - type: web
     name: motocross-rtmp-server
     env: docker
     plan: free
-    dockerfilePath: /Streaming/Dockerfile
-    buildCommand: docker build -t motocross-rtmp -f Streaming/Dockerfile .
+    dockerfilePath: Streaming/Dockerfile
+    buildCommand: |
+      cd Streaming && \
+      docker build -t motocross-rtmp .
     envVars:
       - key: RTMP_PORT
         value: 1935
       - key: HTTP_PORT
         value: 8080
+      - key: MOTOCROSS_API_SERVICE
+        value: motocross-livestream-api  # Must match API service name exactly
       - fromGroup: motocross-streaming-keys
     autoDeploy: true
     healthCheckPath: /health
+
+envVarGroups:
+  - name: motocross-streaming-keys
+    envVars:
+      - key: API_KEY
+        sync: false
+      - key: STORAGE_BUCKET
+        sync: false
