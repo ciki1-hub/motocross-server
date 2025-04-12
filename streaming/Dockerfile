@@ -1,7 +1,7 @@
 FROM tiangolo/nginx-rtmp
 
 # Copy custom configuration
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY ./streaming/nginx.conf /etc/nginx/nginx.conf
 
 # Install FFmpeg for transcoding
 RUN apt-get update && \
