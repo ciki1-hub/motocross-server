@@ -1,0 +1,77 @@
+worker_processes auto;
+rtmp_auto_push on;
+events {}
+
+rtmp {
+    server {
+        listen ${RTMP_PORT};
+        
+        application live {
+            live on;
+            record off;
+            
+            hls on;
+            hls_path /opt/rtmp/hls;
+            hls_fragment 3;
+            hls_playlist_length 60;
+            
+            dash on;
+            dash_path /opt/rtmp/dash;
+            dash_fragment 3;
+            dash_playlist_length 60;
+            
+            on_publish http://${API_SERVICE_NAME}:${API_PORT}/auth/stream;
+            on_publish_done http://${API_SERVICE_NAME}:${API_PORT}/auth/stream-done;
+            
+            hls_variant _low BANDWIDTH=1000000;
+            hls_variant _mid BANDWIDTH=2000000;
+            hls_variant _high BANDWIDTH=4000000;
+            hls_variant _veryhigh BANDWIDTH=8000000;
+        }
+    }
+}
+
+http {
+    sendfile off;
+    tcp_nopush on;
+    directio 512;
+    default_type application/octet-stream;
+    
+    server {
+        listen ${HTTP_PORT};
+        
+        location /health {
+            return 200 "OK";
+            add_header Content-Type text/plain;
+        }
+        
+        location /hls {
+            root /opt/rtmp;
+            add_header Cache-Control no-cache;
+            add_header 'Access-Control-Allow-Origin' '*' always;
+            add_header 'Access-Control-Allow-Methods' 'GET, OPTIONS' always;
+            
+            types {
+                application/vnd.apple.mpegurl m3u8;
+                video/mp2t ts;
+            }
+        }
+        
+        location /dash {
+            root /opt/rtmp;
+            add_header Cache-Control no-cache;
+            add_header 'Access-Control-Allow-Origin' '*' always;
+            add_header 'Access-Control-Allow-Methods' 'GET, OPTIONS' always;
+            
+            types {
+                application/dash+xml mpd;
+            }
+        }
+        
+        location /stats {
+            rtmp_stat all;
+            rtmp_stat_stylesheet stat.xsl;
+            add_header 'Access-Control-Allow-Origin' '*' always;
+        }
+    }
+}
